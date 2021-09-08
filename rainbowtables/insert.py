@@ -286,11 +286,11 @@ def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True
         else:
             collision_dict = response[0]
             collision_dict_length = response[1]
-
+    
     hash_file = open(hash_file_directory, "r") 
     hash_file_content = json.loads(hash_file.read())
     hash_file.close()
-
+    
     content_to_write = json.dumps([hash_file_content[0], hash_file_content[1], collision_dict, [collision_dict_length]])
     hash_file = open(hash_file_directory, "w")
     hash_file.write(content_to_write)

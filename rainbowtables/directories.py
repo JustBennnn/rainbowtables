@@ -161,17 +161,11 @@ def create_file(overwrite_existing=False):
     """
     remove_file = False
     if os.path.isfile(get_full_path()):
-        if overwrite_existing == True:
-            remove_file = True
-
-        elif overwrite_existing == False:
+        if overwrite_existing == False:
             return False
 
     if os.path.isdir(directory):
         file_path = get_full_path()
-        if remove_file == True:
-            os.remove(file_path)
-
         create_file = open(file_path, "w")
         create_file.write(json.dumps([{}, {}, {}, []]))
         create_file.close()

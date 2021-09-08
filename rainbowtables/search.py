@@ -2,10 +2,12 @@
 
 This program is mainly for the search function.
 """
+import base64
 import json
 import math
 import os
 import time
+import zlib
 
 from .errors import SearchError
 from .insert import hash_function1, hash_function2
@@ -14,7 +16,7 @@ __all__ = [
     "search"
 ]
 
-def search(hash_string, hash_table_path, full_path=False, time_took=True): #time_tooks is measured in seconds
+def search(hash_string, hash_table_path, full_path=False, time_took=True, compression=False): #time_tooks is measured in seconds
     """Search through the hash table until we find a plaintext match to the hash given."""
     start_time = time.time()
     
@@ -26,7 +28,14 @@ def search(hash_string, hash_table_path, full_path=False, time_took=True): #time
         raise FileNotFoundError("Create the directory (create_directory) and the file (create_file) before inserting.")
 
     hash_file = open(hash_table_path, "r")
-    hash_file_content = json.loads(hash_file.read())
+    hash_file_content = hash_file.read()
+    if compression == True:
+        """Decompress the hash file content."""
+        hash_file_content = hash_file_content.encode("utf-8")
+        hash_file_content = base64.b64decode(hash_file_content)
+        hash_file_content = zlib.decompress(hash_file_content)
+        hash_file_content = hash_file_content.decode("utf-8")
+    hash_file_content = json.loads(hash_file_content)
     hash_file.close()
 
     if hash_file_content == [{}, {}, {}, []]:
@@ -42,7 +51,8 @@ def search(hash_string, hash_table_path, full_path=False, time_took=True): #time
 
     hash_index1 = hash_function1(hash_string, hash_dict_length) 
     hash_index2 = hash_function2(hash_string, hash_dict_length)
-    hash_index3 = hash_function1(hash_string, collision_dict_length) #for the secondary table
+    if collision_dict_length > 0:
+        hash_index3 = hash_function1(hash_string, collision_dict_length) #for the secondary table
 
     if hash_dict1 != {}:
         if hash_string == hash_dict1[hash_index1][0:hash_dict1[hash_index1].find(":")]:

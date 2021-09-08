@@ -126,9 +126,9 @@ def get_filename(file_extension=False):
     else:
         return filename
 
-def get_full_path():
+def get_full_path(file_extension=True):
     """Returns the current set directory and filename."""
-    return get_directory() + "/" + get_filename(file_extension=True)
+    return get_directory() + "/" + get_filename(file_extension=file_extension)
 
 def create_directory():
     """Creates the set/default directory."""
@@ -159,7 +159,6 @@ def create_file(overwrite_existing=False):
     
     Only proceed if the set/default directory exists.
     """
-    remove_file = False
     if os.path.isfile(get_full_path()):
         if overwrite_existing == False:
             return False

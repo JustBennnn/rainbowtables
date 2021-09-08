@@ -2,6 +2,7 @@
 
 This program is mainly for the insert function.
 """
+import base64
 import hashlib
 import json
 import math
@@ -11,6 +12,7 @@ try:
     import sympy
 except ImportError:
     raise ImportError("Dependency sympy is missing. Use 'pip install sympy' to install it.")
+import zlib
 
 from .directories import get_full_path
 from .errors import AlgorithmError, EncodingError
@@ -85,7 +87,7 @@ def secondary_insert(collision_stash, display_progress=True, collision_dict_leng
 
     return (collision_dict, collision_dict_length)
 
-def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True):
+def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True, compression=False):
     """Insert each word in the wordlist with its corresponding hash."""
     if hash_type not in supported_algorithms:
         raise AlgorithmError(f"Hash algorithm {hash_type} is not currently supported.")
@@ -292,6 +294,13 @@ def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True
     hash_file.close()
     
     content_to_write = json.dumps([hash_file_content[0], hash_file_content[1], collision_dict, [collision_dict_length]])
+    if compression == True:
+        """Compress the content so it takes up less space in the file."""
+        content_to_write = content_to_write.encode("utf-8")
+        content_to_write = zlib.compress(content_to_write, 9)
+        content_to_write = base64.b64encode(content_to_write)
+        content_to_write = content_to_write.decode("utf-8")
+
     hash_file = open(hash_file_directory, "w")
     hash_file.write(content_to_write)
     hash_file.close()

@@ -33,6 +33,7 @@ rt.create_file()
 
 print("The set directory has been created at", rt.get_directory()) 
 print("The set file has been created at", rt.get_filename(file_extension=True))
+print("The full path of the file is", rt.get_full_path(file_extension=True))
 ```
 
 > If `full_path` is set to false, then the directory given will be created in relation to the program directory. 
@@ -42,7 +43,7 @@ print("The set file has been created at", rt.get_filename(file_extension=True))
 
 ```python
 print(rt.supported_algorithms) #show the current supported algorithms
-rt.insert("wordlist.txt", "sha256", wordlist_encoding="utf-8", display_progress=True) 
+rt.insert("wordlist.txt", "sha256", wordlist_encoding="utf-8", display_progress=True, compression=True) 
 #display_progress shows the current word being iterated
 ```
 
@@ -50,15 +51,18 @@ rt.insert("wordlist.txt", "sha256", wordlist_encoding="utf-8", display_progress=
 > Make sure to use `set_directory()` and `set_filename()` before insert is called, and in the same program.
 
 > Both `wordlist_encoding` and `display_progress` are set to their default values in the example.
+> However, the default value for `compression` is False.
 
 The `insert` function will iterate through each word inside of the wordlist, and store its hash in the rainbowtable.
 
 ```python
 lookup = search(
     "97b7a2c97203792e932f1a2d26eb5b3f780ab9ec42e9f189186e6353d7564a2c", 
-    "demo_table", 
+    "demo_table", #this could also rt.get_full_path(), with full_path set to True
     full_path=False, #full_path default value is False
-    time_took=True) #time_took default value is True
+    time_took=True, #time_took default value is True
+    compression=True) #compression should only be True if the insert function compressed the table
+
 if lookup != False:
     print("The decrypted hash is", lookup[0] + ".") #output - The decrypted hash is https://www.youtube.com/watch?v=iik25wqIuFo.
     print("It was found in", lookup[1], "seconds.") #output - It was found in 0.5 seconds.

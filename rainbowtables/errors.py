@@ -24,3 +24,6 @@ class AlgorithmError(HashtableException):
 
 class SearchError(HashtableException):
     """Any errors given from the search function."""
+
+class SystemNotSupported(HashtableException):
+    """Unable to detect specific values for the current OS."""

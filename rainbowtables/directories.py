@@ -7,7 +7,7 @@ import json
 import os
 import platform
 
-from .errors import FilenameError, PathError
+from .errors import FilenameError, PathError, SystemNotSupported
 
 __all__ = [
     "set_directory",
@@ -34,7 +34,10 @@ def check_for_invalid_characters(string, os, path_input=False):
             illegal_characters = ["<", ">", ":", '"', "/", "\\", "|", "?", "*"]
 
     elif os == "Linux":
-        return False, ""
+        if path_input == False:
+            illegal_characters = ["/"]
+        else:
+            return False, ""
 
     for character in illegal_characters:
         if character in string:
@@ -54,6 +57,11 @@ def check_for_reserved_names(string, os):
             "COM4", "COM5", "COM6", "COM7", "COM8", "COM9", "LPT1",
             "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
         ]
+    elif os == "Linux":
+        """Linux has no reserved names."""
+        return False, ""
+    else:
+        raise SystemNotSupported(f"Unsupported OS {os}.")
 
     """An exception should only be given if an illegal name is found on its own with no other characters."""
     for reserved_name in illegal_names:

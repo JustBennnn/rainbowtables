@@ -46,12 +46,11 @@ def search(hash_string, hash_table_path, full_path=False, time_took=True, compre
     collision_dict = hash_file_content[2]
     hash_dict_length = len(hash_dict1)
     collision_dict_length = hash_file_content[3][0]
-    if collision_dict_length > 0:
-        probe_limit = int(math.log(collision_dict_length, 2))
 
     hash_index1 = hash_function1(hash_string, hash_dict_length) 
     hash_index2 = hash_function2(hash_string, hash_dict_length)
     if collision_dict_length > 0:
+        probe_limit = int(math.log(collision_dict_length, 2))
         hash_index3 = hash_function1(hash_string, collision_dict_length) #for the secondary table
 
     if hash_dict1 != {}:

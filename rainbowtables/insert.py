@@ -21,6 +21,7 @@ supported_algorithms = ["sha256", "sha512", "sha512_256", "md5"]
 
 __all__ = [
     "insert",
+    "insert_wordlists",
     "supported_algorithms"
 ] 
 
@@ -304,3 +305,11 @@ def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True
     hash_file = open(hash_file_directory, "w")
     hash_file.write(content_to_write)
     hash_file.close()
+
+def insert_wordlists(wordlists, hash_type, wordlist_encoding="utf-8", display_progress=True, compression=False):
+    """Insert a list of wordlists."""
+    if not isinstance(wordlists, list):
+        raise TypeError(f"Wordlists input must be type list, not type {type(wordlists).__name__}.")
+
+    for wordlist in wordlists:
+        insert(wordlist, hash_type, wordlist_encoding=wordlist_encoding, display_progress=display_progress, compression=compression)

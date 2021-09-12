@@ -1,4 +1,13 @@
 # rainbowtables
+
+[![Downloads](https://pepy.tech/badge/rainbowtables)](https://pepy.tech/project/rainbowtables)
+[![Downloads/Month](https://pepy.tech/badge/rainbowtables/month)](https://pepy.tech/project/rainbowtables)
+[![PyPI Version](https://img.shields.io/pypi/v/rainbowtables)](https://pypi.org/project/rainbowtables/)
+[![Last Commit](https://img.shields.io/github/last-commit/justbennnn/rainbowtables)](https://github.com/JustBennnn/rainbowtables/commits/master)
+[![Repository Size](https://img.shields.io/github/repo-size/justbennnn/rainbowtables)](https://github.com/JustBennnn/rainbowtables)
+[![License MIT](https://img.shields.io/github/license/justbennnn/rainbowtables)](https://github.com/JustBennnn/rainbowtables/blob/master/LICENSE)
+[![Discord Profile](https://img.shields.io/badge/chat-discord-blue)](https://discordapp.com/users/801460768577945681)
+
 Rainbowtables is a library where the user can create their own rainbowtable. This means that they can insert values
 from a wordlist into the table and then do a lookup for a word based on its hash. It essentially finds a plaintext 
 match for a hash inside of the table. The rainbowtable has a worst case lookup time of O(log n), where 'n' is the size

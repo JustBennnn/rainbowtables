@@ -43,8 +43,10 @@ print("The full path of the file is", rt.get_full_path(file_extension=True))
 
 ```python
 print(rt.supported_algorithms) #show the current supported algorithms
-rt.insert("wordlist.txt", "sha256", wordlist_encoding="utf-8", display_progress=True, compression=True) 
-#display_progress shows the current word being iterated
+rt.insert("wordlist.txt", "sha256", wordlist_encoding="utf-8", display_progress=True, compression=True) #display_progress shows the current word being iterated
+#or
+wordlists = ["wordlist1.txt", "wordlist2.txt"]
+rt.insert_wordlists(wordlists, "sha256", wordlist_encoding="utf-8", display_progress=True, compression=True) #this function inserts multiple wordlists at once
 ```
 
 > When the insert function is called, it will use the current set file directory to insert into.
@@ -53,7 +55,9 @@ rt.insert("wordlist.txt", "sha256", wordlist_encoding="utf-8", display_progress=
 > Both `wordlist_encoding` and `display_progress` are set to their default values in the example.
 > However, the default value for `compression` is False.
 
-The `insert` function will iterate through each word inside of the wordlist, and store its hash in the rainbowtable.
+The `insert` function will iterate through each word inside of the wordlist, and store its hash in the rainbowtable.\
+The `insert_wordlists` function will do the same as the `insert` function, but also iterate through multiple wordlists to put into the rainbowtable.
+The efficieny of this function is going to be improved in a future update.
 
 ```python
 lookup = search(

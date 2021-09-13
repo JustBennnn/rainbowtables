@@ -13,6 +13,7 @@ try:
 except ImportError:
     raise ImportError("Dependency sympy is missing. Use 'pip install sympy' to install it.")
 import zlib
+from typing import Any
 
 from .directories import get_full_path
 from .errors import AlgorithmError, EncodingError
@@ -25,21 +26,21 @@ __all__ = [
     "supported_algorithms"
 ] 
 
-def hash_function1(hash_string, hash_dict_length):
+def hash_function1(hash_string, hash_dict_length) -> str:
     """Calculates a hash index."""
     seed = int.from_bytes(hash_string.encode("utf-8"), "big")
     random.seed(seed)
     hash_index = random.randint(-(2 << 32), (2 << 32)) % hash_dict_length
     return str(hash_index)
 
-def hash_function2(hash_string, hash_dict_length):
+def hash_function2(hash_string, hash_dict_length) -> str:
     """Calculates a different hash index to hash_function1."""
     seed = int.from_bytes(hash_string.encode("utf-8"), "big")
     random.seed(seed)
     hash_index = random.randint(-(2 << 64), (2 << 64)) % hash_dict_length
     return str(hash_index)
 
-def secondary_insert(collision_stash, display_progress=True, collision_dict_length_multiplier=1):
+def secondary_insert(collision_stash, display_progress=True, collision_dict_length_multiplier=1) -> Any:
     """Insert words from the collision stash into a secondary hash table.
     
     The actual length of the dict includes the probe limit, which makes 
@@ -88,7 +89,7 @@ def secondary_insert(collision_stash, display_progress=True, collision_dict_leng
 
     return (collision_dict, collision_dict_length)
 
-def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True, compression=False):
+def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True, compression=False) -> None:
     """Insert each word in the wordlist with its corresponding hash."""
     if hash_type not in supported_algorithms:
         raise AlgorithmError(f"Hash algorithm {hash_type} is not currently supported.")
@@ -306,7 +307,7 @@ def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True
     hash_file.write(content_to_write)
     hash_file.close()
 
-def insert_wordlists(wordlists, hash_type, wordlist_encoding="utf-8", display_progress=True, compression=False):
+def insert_wordlists(wordlists, hash_type, wordlist_encoding="utf-8", display_progress=True, compression=False) -> None:
     """Insert a list of wordlists."""
     if not isinstance(wordlists, list):
         raise TypeError(f"Wordlists input must be type list, not type {type(wordlists).__name__}.")

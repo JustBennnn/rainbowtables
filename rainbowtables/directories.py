@@ -22,7 +22,7 @@ __all__ = [
 directory = os.getcwd()
 filename = "hash_table.json"
 
-def check_for_invalid_characters(string, os, path_input=False):
+def check_for_invalid_characters(string, os, path_input=False) -> tuple[bool, str]:
     """Give an error if any illegal characters are detected based on the os.
     
     Forward and back slashes will be ignored since they are used to define each section in a path.
@@ -37,19 +37,19 @@ def check_for_invalid_characters(string, os, path_input=False):
         if path_input == False:
             illegal_characters = ["/"]
         else:
-            return False, ""
+            return (False, "")
 
     for character in illegal_characters:
         if character in string:
             if character == ":":
                 for x in range(0, len(string)):
                     if string[x] == ":" and x != 1:
-                        return True, ":"
+                        return (True, ":")
             else:
-                return True, character
-    return False, ""
+                return (True, character)
+    return (False, "")
 
-def check_for_reserved_names(string, os):
+def check_for_reserved_names(string, os) -> tuple[bool, str]:
     """Give an error if any reserved names are used in the file path."""
     if os == "Windows":
         illegal_names = [
@@ -59,28 +59,28 @@ def check_for_reserved_names(string, os):
         ]
     elif os == "Linux":
         """Linux has no reserved names."""
-        return False, ""
+        return (False, "")
     else:
         raise SystemNotSupported(f"Unsupported OS {os}.")
 
     """An exception should only be given if an illegal name is found on its own with no other characters."""
     for reserved_name in illegal_names:
         if string.upper() == reserved_name:
-            return True, reserved_name
+            return (True, reserved_name)
 
         if reserved_name in string.upper():
             reserved_name_index = string.upper().find(reserved_name)
 
             if string[reserved_name_index-1] == "\\" or string[reserved_name_index-1] == "/":
                 if reserved_name_index+(len(reserved_name)-1) == len(string)-1:
-                    return True, reserved_name
+                    return (True, reserved_name)
 
                 if string[reserved_name_index+len(reserved_name)] == "\\" or string[reserved_name_index+len(reserved_name)] == "/":
-                    return True, reserved_name
+                    return (True, reserved_name)
 
-    return False, ""
+    return (False, "")
 
-def set_directory(file_directory, full_path=False):
+def set_directory(file_directory, full_path=False) -> None:
     """Sets the directory of where the file will be stored. If 'full_path' is true,
     set the directory as the full path.
 
@@ -102,7 +102,7 @@ def set_directory(file_directory, full_path=False):
     elif full_path == True:
         directory = file_directory
 
-def set_filename(file_name):
+def set_filename(file_name) -> None:
     """Sets the filename.
     
     If no filename is set, it will remain the default name..
@@ -123,22 +123,22 @@ def set_filename(file_name):
     
     filename = file_name + ".json"
 
-def get_directory():
+def get_directory() -> str:
     """Returns the current set directory."""
     return directory
 
-def get_filename(file_extension=False):
+def get_filename(file_extension=False) -> str:
     """Returns the current set filename."""
     if file_extension == False:
         return filename[0:filename.find(".json")]
     else:
         return filename
 
-def get_full_path(file_extension=True):
+def get_full_path(file_extension=True) -> str:
     """Returns the current set directory and filename."""
     return get_directory() + "/" + get_filename(file_extension=file_extension)
 
-def create_directory():
+def create_directory() -> None:
     """Creates the set/default directory."""
     slash_indexes = []
     for x in range(0, len(directory)):
@@ -162,7 +162,7 @@ def create_directory():
     for _dir in directories_to_create:
         os.mkdir(_dir)
 
-def create_file(overwrite_existing=False):
+def create_file(overwrite_existing=False) -> Union[bool, None]:
     """Creates the file inside of the set/default directory.
     
     Only proceed if the set/default directory exists.

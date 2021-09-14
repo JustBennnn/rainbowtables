@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="rainbowtables",
-    version="1.0.4",
+    version="1.0.5",
     author="JustBen",
     author_email="justben009@gmail.com",
     description="A python library allowing the user to create a rainbowtable.",

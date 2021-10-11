@@ -6,6 +6,7 @@ it temporarily, where it will be returned from the function...
 import json
 import os
 import platform
+from typing import Tuple, Union
 
 from .errors import FilenameError, PathError, SystemNotSupported
 
@@ -22,7 +23,7 @@ __all__ = [
 directory = os.getcwd()
 filename = "hash_table.json"
 
-def check_for_invalid_characters(string, os, path_input=False) -> tuple[bool, str]:
+def check_for_invalid_characters(string, os, path_input=False) -> Tuple[bool, str]:
     """Give an error if any illegal characters are detected based on the os.
     
     Forward and back slashes will be ignored since they are used to define each section in a path.
@@ -49,7 +50,7 @@ def check_for_invalid_characters(string, os, path_input=False) -> tuple[bool, st
                 return (True, character)
     return (False, "")
 
-def check_for_reserved_names(string, os) -> tuple[bool, str]:
+def check_for_reserved_names(string, os) -> Tuple[bool, str]:
     """Give an error if any reserved names are used in the file path."""
     if os == "Windows":
         illegal_names = [

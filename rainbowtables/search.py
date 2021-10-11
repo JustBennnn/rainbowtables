@@ -8,7 +8,7 @@ import math
 import os
 import time
 import zlib
-from typing import Any, Union
+from typing import Any, Tuple, Union
 
 from .errors import SearchError
 from .insert import hash_function1, hash_function2
@@ -17,7 +17,7 @@ __all__ = [
     "search"
 ]
 
-def search(hash_string, hash_table_path, full_path=False, time_took=True, compression=False) -> Union[tuple[str, str], str, bool]: #time_tooks is measured in seconds
+def search(hash_string, hash_table_path, full_path=False, time_took=True, compression=False) -> Union[Tuple[str, str], str, bool]: #time_tooks is measured in seconds
     """Search through the hash table until we find a plaintext match to the hash given."""
     start_time = time.time()
     

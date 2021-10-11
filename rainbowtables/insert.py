@@ -13,7 +13,7 @@ try:
 except ImportError:
     raise ImportError("Dependency sympy is missing. Use 'pip install sympy' to install it.")
 import zlib
-from typing import Any, Dict, Union
+from typing import Any, Dict, Tuple, Union
 
 from .directories import get_full_path
 from .errors import AlgorithmError, EncodingError
@@ -40,7 +40,7 @@ def hash_function2(hash_string, hash_dict_length) -> str:
     hash_index = random.randint(-(2 << 64), (2 << 64)) % hash_dict_length
     return str(hash_index)
 
-def secondary_insert(collision_stash, display_progress=True, collision_dict_length_multiplier=1) -> Union[tuple[Dict[str, str], int], int]: 
+def secondary_insert(collision_stash, display_progress=True, collision_dict_length_multiplier=1) -> Union[Tuple[Dict[str, str], int], int]: 
     """Insert words from the collision stash into a secondary hash table.
     
     The actual length of the dict includes the probe limit, which makes 

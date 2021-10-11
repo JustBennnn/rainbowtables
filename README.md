@@ -90,3 +90,10 @@ The `search` function will return 1 of 3 results.
 * The matching plaintext.
 * A tuple containing the matching plaintext and the time taken to find it.
 * False, meaning the lookup failed.
+
+# CHANGELOG
+
+## 1.0.6
+
+* Created CHANGELOG.
+* Fixed subscript error for versions <3.9.

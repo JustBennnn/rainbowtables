@@ -18,7 +18,7 @@ from typing import Any, Dict, Tuple, Union
 from .directories import get_full_path
 from .errors import AlgorithmError, EncodingError
 
-supported_algorithms = ["sha256", "sha512", "sha512_256", "md5"]
+supported_algorithms = hashlib.algorithms_available
 
 __all__ = [
     "insert",
@@ -202,15 +202,7 @@ def insert(wordlist, hash_type, wordlist_encoding="utf-8", display_progress=True
     
         current_word = wordlist[int(x)] 
 
-        if hash_type == "sha256":
-            hash_encoder = hashlib.new("sha256")
-        elif hash_type == "sha512":
-            hash_encoder = hashlib.new("sha512")
-        elif hash_type == "sha512_256":
-            hash_encoder = hashlib.new("sha512_256")
-        elif hash_type == "md5":
-            hash_encoder = hashlib.new("md5")
-        
+        hash_encoder = hashlib.new(hash_type)
         hash_encoder.update(current_word.encode("utf-8"))
         current_hash = hash_encoder.hexdigest()
         

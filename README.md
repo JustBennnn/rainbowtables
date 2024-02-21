@@ -69,9 +69,9 @@ The `insert_wordlists` function will do the same as the `insert` function, but a
 The efficieny of this function is going to be improved in a future update.
 
 ```python
-lookup = search(
+lookup = rt.search(
     "97b7a2c97203792e932f1a2d26eb5b3f780ab9ec42e9f189186e6353d7564a2c", 
-    "demo_table", #this could also rt.get_full_path(), with full_path set to True
+    "/rainbow_table/demo_table", #this could also rt.get_full_path(), with full_path set to True
     full_path=False, #full_path default value is False
     time_took=True, #time_took default value is True
     compression=True) #compression should only be True if the insert function compressed the table
